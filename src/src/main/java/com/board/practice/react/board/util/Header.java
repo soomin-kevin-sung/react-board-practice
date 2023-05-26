@@ -18,6 +18,7 @@ public class Header<T> {
     private T data;
     private Pagination pagination;
 
+    @SuppressWarnings("unchecked")
     public static <T> Header<T> OK() {
         return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
@@ -26,6 +27,7 @@ public class Header<T> {
                 .build();
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Header<T> OK(T data) {
         return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
@@ -35,6 +37,7 @@ public class Header<T> {
                 .build();
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Header<T> OK(T data, Pagination pagination) {
         return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
@@ -45,6 +48,7 @@ public class Header<T> {
                 .build();
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Header<T> ERROR(String description) {
         return (Header<T>)Header.builder()
                 .transactionTime(LocalDateTime.now())
