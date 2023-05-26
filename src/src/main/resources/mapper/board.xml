@@ -2,7 +2,82 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.board.practice.react.board.db.BoardMapper">
-    <select id="getBoardList" resultType="com.board.practice.react.board.db.BoardEntity">
-        SELECT IDX, TITLE, CONTENTS, CREATED_BY, CREATED_AT FROM TB_BOARD
+    <select id="getBoardList" parameterType="Map" resultType="com.board.practice.react.board.db.BoardEntity">
+        SELECT idx,
+        title,
+        contents,
+        created_by,
+        create_at
+        FROM tb_board
+        WHERE 1=1
+
+        <if test="sk != '' || sk != null">
+            <if test="sk == 'title'">
+                AND title LIKE CONCAT('%', #{sv}, '%')
+            </if>
+            <if test="sk == 'contents'">
+                AND contents LIKE CONCAT('%', #{sv}, '%')
+            </if>
+            <if test="sk == 'createdBy'">
+                AND created_by LIKE CONCAT('%', #{sv}, '%')
+            </if>
+        </if>
+
+        ORDER BY IDX DESC
+        LIMIT #{page}, #{size}
     </select>
+
+    <select id="getBoardTotalCount" parameterType="Map" resultType="Int">
+        SELECT COUNT(idx)
+        FROM tb_board
+        WHERE 1=1
+        <if test="sk != '' || sk != null">
+            <if test="sk == 'title'">
+                AND title LIKE CONCAT('%', #{sv}, '%')
+            </if>
+            <if test="sk == 'contents'">
+                AND contents LIKE CONCAT('%', #{sv}, '%')
+            </if>
+            <if test="sk == 'createdBy'">
+                AND created_by LIKE CONCAT('%', #{sv}, '%')
+            </if>
+        </if>
+    </select>
+
+    <select id="getBoardOne" parameterType="Long" resultType="com.board.practice.react.board.db.BoardEntity">
+        SELECT idx,
+        title,
+        contents,
+        created_by,
+        created_at
+        FROM tb_board
+        WHERE IDX=#{idx}
+    </select>
+
+    <insert id="insertBoard" parameterType="com.board.practice.react.board.db.BoardEntity" keyProperty="idx" useGeneratedKeys="true">
+        INSERT INTO tb_board
+        (
+        title,
+        contents,
+        created_by,
+        created_at
+        ) VALUES (
+        #{title},
+        #{contents},
+        #{createdBy},
+        NOW()
+        )
+    </insert>
+
+    <update id="updateBoard" parameterType="com.board.practice.react.board.db.BoardEntity">
+        UPDATE tb_board
+        SET title=#{title},
+        contents=#{contents}
+        WHERE idx=#{idx}
+    </update>
+
+    <delete id="deleteBoard" parameterType="Long">
+        DELETE FROM tb_board
+        WHERE idx=#{idx}
+    </delete>
 </mapper>

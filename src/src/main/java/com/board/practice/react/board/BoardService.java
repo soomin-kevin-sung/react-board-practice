@@ -60,7 +60,7 @@ public class BoardService {
             return Header.ERROR("ERROR");
     }
 
-    Header<BoardEntity> deleteBoard(Long idx) {
+    Header<String> deleteBoard(Long idx) {
         if (boardMapper.deleteBoard(idx) > 0)
             return Header.OK();
         else
