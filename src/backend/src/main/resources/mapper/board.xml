@@ -7,7 +7,7 @@
         title,
         contents,
         created_by,
-        create_at
+        created_at
         FROM tb_board
         WHERE 1=1
 
