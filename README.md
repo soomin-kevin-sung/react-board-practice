@@ -2,5 +2,5 @@
 The React Practice
 
 * Used Libraries
-** React
-** Spring Boot
+  * React
+  * Spring Boot
